@@ -39,6 +39,41 @@ for i := 0; i < len(sample); i++ {
 	is an overloaded term that can mean many things.
 
 https://play.golang.org/p/w7HQAx_rsgx
+
+** FOR LOOPS and Strings **
+When for ranging on a utf-8 value (string), the index will start at each rune,
+ measured in bytes.
+
+ e.g.
+ const nihongo = "日本語"
+	for index, runeValue := range nihongo {
+		fmt.Printf("%#U starts at byte position %d\n", runeValue, index)
+	}
+
+ output:
+	U+65E5 '日' starts at byte position 0
+	U+672C '本' starts at byte position 3
+	U+8A9E '語' starts at byte position 6
+
+ 	for i := 0; i < len(nihongo); i++ {
+		fmt.Printf("%#U starts at byte position %d\n", nihongo[i], i)
+	}
+
+ output:
+	U+0097 starts at byte position 1
+	U+00A5 '¥' starts at byte position 2
+	U+00E6 'æ' starts at byte position 3
+	U+009C starts at byte position 4
+	U+00AC '¬' starts at byte position 5
+	U+00E8 'è' starts at byte position 6
+	U+00AA 'ª' starts at byte position 7
+	U+009E starts at byte position 8
+
+Conclusion:
+To answer the question posed at the beginning:
+Strings are built from bytes so indexing them yields bytes, not characters.
+A string might not even hold characters. In fact, the definition of "character" is ambiguous
+and it would be a mistake to try to resolve the ambiguity by defining that strings are made of characters.
 */
 
 // Distance calculates hamming distance between two DNA strands
